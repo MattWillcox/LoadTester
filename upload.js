@@ -7,15 +7,16 @@ var theLog = fs.readFileSync(process.argv[2])
 const bucket = "awsbois"
 const mime = "text/plain"
 var resource = "/" + bucket + "/" + path.basename(filePath, '.log')
-var dateValue = "Fri, 14 Jun 2019 11:06:04 -0700"
-var toSign = "PUT\n\n" + mime + "\n" + dateValue + "\n" + resource
+var timestamp = new Date(Date.now())
+console.log(timestamp.toUTCString())
+var toSign = "PUT\n\n" + mime + "\n" + timestamp.toUTCString() + "\n" + resource
 var s3Key = ""
 var s3Secret = ""
 
 var hasher = crypto.createHmac("SHA1", s3Secret)
 hasher.update(theLog)
-var signature = hasher.digest().toString()
-console.log(signature)
+var signature = hasher.digest()
+console.log(hasher.digest("hex").toString())
 /*
 sources:
 https://stackoverflow.com/questions/44751574/uploading-to-amazon-s3-via-curl-route/44751929
