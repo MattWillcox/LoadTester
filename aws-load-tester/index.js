@@ -1,13 +1,26 @@
-const { sdk } = require('@cto.ai/sdk')
+const { ux, sdk } = require('@cto.ai/sdk')
+var fs = require('fs');
+var settings = require('./settings');
 
 async function main() {
-  let instances = prompt("How many instances?: ");
-  let k6GitHub = prompt("What is your github of your k6 script?: ");
-  let virtualUsers = prompt("How many virtual users per instance?: ");
-  let benchMark = prompt("How long do you want to run the benchmark?: ");
-  let writeToS3 = prompt("Do you want to write the results to s3? if so, specify keys: ");
-  let writeToYaml = prompt("Write to yaml: ");
+  // fs.readdir("./prevSettings", function (err, files) {
+  //   if (err) {
+  //     // some sort of error
+  //   } else {
+  //     if (!files.length) {
+  //       console.log("EMPTY FILE")
+  //     } else {
+  //       console.log("NOT EMPTY")
+  //     }
+  //   }
+  // });
 
+  let instances = await ux.prompt(settings.instances);
+  let k6GitHub = await ux.prompt(settings.k6GitHub);
+  let virtualUsers = await ux.prompt(settings.virtualUsers);
+  let benchMark = await ux.prompt(settings.benchMark);
+  let writeToS3 = await ux.prompt(settings.writeToS3);
+  
 }
 
 main()
