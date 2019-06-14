@@ -1,5 +1,5 @@
 # LoadTester
-Load Testing with k6 and EC2
+Load Testing with k6 and EC2 ops for CTO.ai
 
 ## Get Started
 ```bash
