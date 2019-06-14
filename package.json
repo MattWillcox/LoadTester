@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MattWillcox/LoadTester/issues"
   },
-  "homepage": "https://github.com/MattWillcox/LoadTester#readme"
+  "homepage": "https://github.com/MattWillcox/LoadTester#readme",
+  "dependencies": {
+    "aws-sdk": "^2.476.0"
+  }
 }
