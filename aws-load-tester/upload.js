@@ -5,6 +5,7 @@ var s3Key = ""
 var s3Secret = ""
 var buck = 'awsbois2'
 
+//takes a file path to be uploaded
 function Upload(filepath) {
   var isErr = false
   var errData = {}
@@ -20,6 +21,7 @@ function Upload(filepath) {
   return { isErr, errData }
 }
 
+//takes an AWS key, secret, and optionally a bucket name
 function Init(key, secret, bucket = "awsbois2") {
   s3Key = key
   s3Secret = secret
