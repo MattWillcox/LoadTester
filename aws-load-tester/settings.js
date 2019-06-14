@@ -44,6 +44,22 @@ let saveSettings = [
   },
 ]
 
+let loadConfig = [
+  {
+    type: 'confirm',
+    name: 'instances',
+    message: `\n Load a previous config?:  ${ux.colors.reset.green('→')}\n\n`,
+  },
+]
+
+let selectConfig = [
+  {
+    type: 'input',
+    name: 'selectConfig',
+    message: `\n Which previous config would you like to run?:  ${ux.colors.reset.green('→')}\n\n`,
+  },
+]
+
 
 module.exports = {
   instances,
@@ -51,5 +67,7 @@ module.exports = {
   virtualUsers,
   benchMark,
   writeToS3,
-  saveSettings
+  saveSettings,
+  loadConfig,
+  selectConfig
 };
