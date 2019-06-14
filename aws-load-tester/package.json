@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@cto.ai/sdk": "^1.4.5",
+    "aws-sdk": "^2.476.0",
     "fuzzy": "^0.1.3"
   }
 }
