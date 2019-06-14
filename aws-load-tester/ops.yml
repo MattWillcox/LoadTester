@@ -1,0 +1,7 @@
+version: "1"
+name: aws-load-tester
+description: AWS Benchmarking
+run: node /ops/index.js
+network: host
+mountCwd: false
+mountHome: true
