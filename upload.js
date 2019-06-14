@@ -1,28 +1,30 @@
-import { readFileSync } from 'fs';
-import { S3, config } from "aws-sdk";
+const fs = require("fs")
+const AWS = require("aws-sdk")
 
 var s3Key = ""
 var s3Secret = ""
-var buck = 'awsbois'
+var buck = 'awsbois2'
 
 function Upload(filepath) {
-  var err = false
-  var theLog = readFileSync(filepath)
-  var s3 = new S3();
+  var isErr = false
+  var errData = {}
+  var theLog = fs.readFileSync(filepath)
+  var s3 = new AWS.S3();
   var manUp = s3.upload({ Bucket: buck, Key: Date.now() + '.log', ACL: "public-read", Body: theLog }, function (err, data) {
-    err = true
+    isErr = true
+    errData = data
     console.log(err, data)
   })
 
   manUp.send()
-  return { err, data }
+  return { isErr, errData }
 }
 
-function Init(key, secret, bucket) {
+function Init(key, secret, bucket = "awsbois2") {
   s3Key = key
   s3Secret = secret
   buck = bucket
-  config.update({ region: 'ca-central-1', accessKeyId: s3Key, secretAccessKey: s3Secret });
+  AWS.config.update({ region: 'us-east-1', accessKeyId: s3Key, secretAccessKey: s3Secret });
 }
 
-module.exports({ Init: Init(), Upload: Upload() })
+module.exports = { Init, Upload }
