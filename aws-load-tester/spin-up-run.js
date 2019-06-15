@@ -21,8 +21,8 @@ function benchmark(instanceNum) {
       ImageId: 'ami-0bcd00e9df92ea1bd',
       InstanceType: 't2.micro',
       KeyName: 'launchkey',
-      MinCount: instanceNum,
-      MaxCount: instanceNum,
+      MinCount: instanceNum || 1,
+      MaxCount: instanceNum || 1,
       SecurityGroupIds: [
         'sg-00d1e9d6101c6603e',
       ],
@@ -48,55 +48,41 @@ function benchmark(instanceNum) {
       if (err) console.log(err);
       else console.log('success');
 
-      // const instanceIds = data.Instances.map(instance => instance.InstanceId);
-      // console.log('instanceIds: ', instanceIds);
-      // var params = {
-      //   // InstanceIds: instanceIds,
-      //   // Filters: [{
-      //   //   Name: 'instance-id',
-      //   //   Values: [instanceId]
-      //   // }]
-      // };
+      const instanceIds = data.Instances.map(instance => instance.InstanceId);
+      console.log('instanceIds: ', instanceIds);
+      var params = {
+        InstanceIds: instanceIds,
+      };
 
-      // ec2.waitFor('instanceStatusOk', params, function(err, data) {
-      //   console.log('HERE5');
-      //   if (err) {
-      //     console.log('err: ', err);
-      //   }
-      //   console.log('data: ', data);
+        if (err) {
+          console.log('err: ', err);
+        }
 
-      //   console.log('HERE6');
-      //   var ssm = new AWS.SSM();
-      //   var params = {
-      //     DocumentName: 'AWS-RunShellScript', /* required */
-      //     Parameters: {
-      //       'commands': [
-      //         'git clone https://github.com/MattWillcox/LoadTester.git',
-      //         'cd LoadTester',
-      //         'k6 run -e URL=https://api-v2.liondesk.com/contacts,OAUTH_TOKEN=64b9e80f94b1f7d016dba6302f72914d5bb6253c --vus=1 --duration="10s" test/index.js > output.txt',
-      //       ],
-      //     },
-      //     Targets: [
-      //       {
-      //         Key: 'tag:name',
-      //         Values: [
-      //           serverTagName
-      //         ]
-      //       },
-      //     ],
-      //   };
-      //   console.log('HERE7');
+        console.log('HERE6');
+        var ssm = new AWS.SSM();
+        var params = {
+          DocumentName: 'AWS-RunShellScript', /* required */
+          Parameters: {
+            'commands': [
+              'git clone https://github.com/MattWillcox/LoadTester.git',
+              'cd LoadTester',
+              'k6 run -e URL=https://api-v2.liondesk.com/contacts,OAUTH_TOKEN=64b9e80f94b1f7d016dba6302f72914d5bb6253c --vus=1 --duration="10s" test/index.js',
+              ],
+          },
+          Targets: [
+            {
+              Key: 'tag:name',
+              Values: [
+                serverTagName
+              ]
+            },
+          ],
+        };
+        console.log('HERE7');
 
-      //   ssm.sendCommand(params, function(err, data) {
-      //   console.log('HERE8');
-      //     if (err) console.log(err);
-      //     else console.log('commands', data);
-      //     // uploader.Upload("output.txt ");
-
-      //     // resolve('resolved')
-      //   });
-      //   console.log('HERE9');
-      // });
+        ssm.sendCommand(params, function(err, data) {          if (err) console.log(err);
+          else console.log('commands', data);
+        });
     });
 }
 
