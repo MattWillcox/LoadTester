@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/MattWillcox/LoadTester#readme",
   "dependencies": {
-    "aws-sdk": "^2.476.0"
+    "aws-sdk": "^2.814.0"
   }
 }
